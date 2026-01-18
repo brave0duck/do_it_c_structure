@@ -6,7 +6,7 @@ int main(void)
     int i, j, n;
     do
     {
-        printf("몇 단 삼각형 입니까? : ");
+        printf("몇층짜리 삼각형 입니까? : ");
         scanf("%d", &n);
 
     } while (n <= 0);
