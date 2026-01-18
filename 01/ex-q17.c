@@ -1,10 +1,11 @@
 // n단의 피라미드를 출력하는 함수를 작성하시오
-#include <stdio.h>
 // n=4, 7 = (4-1)*2 +1
 // 1111111
 //  22222
 //   333
 //    4
+#include <stdio.h>
+
 void nrPira(int n)
 {
     int i, j;
