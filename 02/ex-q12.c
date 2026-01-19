@@ -1,4 +1,4 @@
-// 신체검사 구조체 연습
+// 2-13.c를 수정하여 시력분포를 *로 표시하시오
 #include <stdio.h>
 #define VMAX 21
 
@@ -52,7 +52,11 @@ int main(void){
     dist_vision(x,nx,vdist);
     printf("\n== 시력 분포 ==\n");
     for(i=0; i<VMAX ; i++){
-        printf("%3.1f ~ : %2d명\n", i/10.0, vdist[i]);
+        printf("%3.1f ~ : ", i/10.0);
+        for(int j=0; j<vdist[i] ; j++){
+            printf("*");
+        }
+        putchar('\n');
     }
     return 0;
 }
