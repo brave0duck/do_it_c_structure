@@ -3,21 +3,21 @@
 #include <stdlib.h>
 
 int search(int a[],int n,int key){
-    char tap='\t';
+    char *tap="  ";
     char dash[] = "---";
     printf("   |");
     for(int i=0; i<n ; i++){
         printf("%2d ", i);
     }
-    printf("\n---|");
+    printf("\n---+");
     for (int i=0; i<n ;i++){
         printf("%s",dash);
     }
     putchar('\n');
     for(int i=0; i<n;i++){
         printf("   |");
-        for(int j=0; j<i; j++)putchar(tap);
-        printf("*");
+        for(int j=0; j<i; j++) printf("%3s",tap);
+        printf(" *");
         printf("\n%d  |", i);
         for(int j=0;j<n;j++){
             printf("%2d ",a[j]);
@@ -46,6 +46,7 @@ int main(void){
 
     printf("검색값 : ");
     scanf("%d", &ky);
+    putchar('\n');
     idx = search(x,nx,ky);
     if(idx == -1){
         puts("\n검색에 실패했습니다.");
