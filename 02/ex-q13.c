@@ -18,7 +18,7 @@ int mdays[][12] = {
 int isleap(int year){
     return year%4 == 0 && year%100 != 0 || year%400 == 0;
 }
-// 날짜구조체에 입력
+// 날짜구조체에 입력 
 Date Dateof(int y,int m,int d){
     Date a;
     a.year = y;
@@ -28,18 +28,17 @@ Date Dateof(int y,int m,int d){
 }
 //몇일뒤로 이동
 Date After(Date x, int n){
-    int days=n;
     int leap = isleap(x.year);  // 윤년 체크(윤년마다 마지막날이 다르다! 윤년 2월은 29일)
-    while(days){
-        if( days > (mdays[leap][x.month-1] - x.day)){   // 이동일이 그달 마지막날보다 더 큰가?
-            days = days - (mdays[leap][x.month-1] - x.day); // 차일을 계산
+    while(n){
+        if( n > (mdays[leap][x.month-1] - x.day)){   // 이동일이 그달 마지막날보다 더 큰가?
+            n -= (mdays[leap][x.month-1] - x.day); // 차일을 계산
             x.day=0;
             x.month++;
             if(x.month==13){    //12월이 넘어가면 연,월을 다음해 1월로 갱신
                 x.year++; x.month=1;
             }
         }else{  // 이동일이 마지막날보다 작으면 그냥 더해서 종료
-            x.day += days;
+            x.day += n;
             break;
         }
     }
@@ -47,18 +46,17 @@ Date After(Date x, int n){
 }
 //몇일전으로 이동
 Date Before(Date x, int n){
-    int days=n;
     int leap = isleap(x.year);  // 윤년 체크(윤년마다 마지막날이 다르다! 윤년 2월은 29일)
-    while(days){
-        if( days > x.day){  //이동일이 지정일보다 큰지 확인
-            days = days - x.day;    //뺀날을 계산
+    while(n){
+        if( n > x.day){  //이동일이 지정일보다 큰지 확인
+            n = n - x.day;    //뺀날을 계산
             x.month--;
             if(x.month == 0){   // 1월밑으로 내려가면 연,월을 작년 12월로 갱신
                 x.year--; x.month=12;
             }
             x.day = mdays[leap][x.month];
         }else{
-            x.day = x.day - days;
+            x.day = x.day - n;
             break;
         }
     }
