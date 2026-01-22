@@ -2,9 +2,9 @@
 #define ___INTSTACK
 
 typedef struct{
-    int max;
-    int ptr;
-    int *stk;
+    int max;    // max elemets
+    int now;    // stack pos , ptr
+    int *pStack;   // array pointer, stk
 }IntStack;
 
 // stack 초기화
