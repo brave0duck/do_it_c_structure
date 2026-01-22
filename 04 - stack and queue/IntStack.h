@@ -1,5 +1,5 @@
-#ifndef ___INTSTACK
-#define ___INTSTACK
+#ifndef __INTSTACK__
+#define __INTSTACK__
 
 typedef struct{
     int max;    // max elemets
