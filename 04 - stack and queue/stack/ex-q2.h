@@ -3,15 +3,15 @@
 #define __Q2STACK__
 
 typedef struct st{
-    int ptr;
-    int storage;
+    int ptr;    //스택 포인터 (위치저장)
+    int storage; // 스택 갯수
 } stack;
 
 typedef struct{
-    int max;
-    stack a;
-    stack b;
-    int *pStack;   // array pointer, stk
+    int max;    // 스택 총량
+    stack a;    // 1스택 = 정방향 0 1 2 3 4 5
+    stack b;    // 2스택 = 역방향 10 9 8 7 6
+    int *pStack;   // 스택 동적배열 포인터
 }DStack;
 
 
@@ -26,7 +26,7 @@ int Peek(const DStack *s, int type, int *x);
 // 스택 비우기
 void Clear(DStack *s, int type);
 // 스택의 최대용량
-int Capacity(const DStack *s, int type);
+int Capacity(const DStack *s);
 // 스택의 데이터갯수
 int Size(const DStack *s, int type);
 // 비어있나?
