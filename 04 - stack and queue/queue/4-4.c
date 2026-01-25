@@ -23,9 +23,9 @@ int Enque(RingQueue *q, int x){
     if(IsFull(q)){
         return -1;
     }else{
-        q->rear = q->rear++ % q->max;
-        q->que[q->rear] = x;
-        q->num++;
+        q->que[q->rear % q->max] = x;   // 원형이므로 %로 순환해준다
+        q->rear = (q->rear+1) % q->max;                      // rear 1+ 증가
+        q->num++;                       // 총량 1+ 증가
         return 0;
     }
 }
@@ -33,23 +33,22 @@ int Deque(RingQueue *q, int *x){
     if(IsEmpty(q)){
         return -1;
     }else{
-        *x = q->que[q->front];
-        q->front = q->front++ % q->max;
-        q->num--;
+        *x = q->que[q->front];          // 뽑아서 반환하고
+        q->front = (q->front+1) % q->max; // front +1. %로 순환
+        q->num--;                       // 총량 -1
         return 0;
     }
 }
-//=========================================> 여기까지
 int Peek(const RingQueue *q,int *x){
     if(IsEmpty(q)){
         return -1;
     }else{
-        *x = q->que[0];
+        *x = q->que[q->front];
         return *x;
     }
 }
 void Clear(RingQueue *q){
-    q->num =0;
+    q->num = q->front = q->rear = 0;
 }
 int Capacity(const RingQueue *q){
     return q->max;
@@ -58,28 +57,34 @@ int Size(const RingQueue *q){
     return q->num;
 }
 int Search(const RingQueue *q,int x){
+    int pos = q->front;
     for(int i=0; i< q->num; i++){
-        if(q->que[i] == x){
-            return i;
+        pos %= q->max;
+        if(q->que[pos] == x){
+            return pos;
         }
+        pos++;
     }
     return -1;
 }
 void Print(const RingQueue *q){
+    int pos = q->front;
     printf("\n=== %d/%d in Queue ===\n",q->num,q->max);
-    for(int i=0; i<q->num; i++){
-        if(i==0){
-            printf("--> %d\n", q->que[i]);
+    for(int i=0; i< q->num; i++){
+        pos %= q->max;
+        if(pos == q->front){
+            printf("--> %d\n", q->que[pos]);
         }else{
-            printf("    %d\n",q->que[i]);
+            printf("    %d\n",q->que[pos]);
         }
+        pos++;
     }
 }
 void Terminate(RingQueue *q){
     if(q->que != NULL){
         free(q->que);
     }
-    q->num = q->max = 0;
+    q->front = q->rear = q->num = q->max = 0;
 }
 int main(void){
     RingQueue * q;
