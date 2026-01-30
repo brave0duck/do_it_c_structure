@@ -6,9 +6,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#define MAXIMUM 30
 #define swap(type,x,y) do{ type t=x; x=y; y=t;}while(0)
-int SWAP_COUNTER;
-int COMPARE_COUNTER;
+
+int SWAP_COUNTER;   //스왑횟수
+int COMP_COUNTER;   //비교횟수
 
 void arr_print(int a[], int max, int key, int flag){
     if(flag == 0){
@@ -53,22 +56,31 @@ void bubble3(int a[], int n){
             }else{
                 arr_print(a,n,j-1,0);
             }
-            COMPARE_COUNTER++;
+            COMP_COUNTER++;
         }
         k = last;
     }
 }
 int main(void){
-    int i;
-    int nx=7;
-    int x[7]={1,3,9,4,7,8,6};
+    srand(time(NULL));
+    int *x;
 
-    bubble3(x,nx);
+    x =(int*)malloc(MAXIMUM*sizeof(int));
 
-    puts("오름차순으로 정렬했습니다.");
-    for(i=0; i<nx ; i++){
-        printf("x[%d] = %d\n",i,x[i]);
+    printf("Original : \t");
+    for(int i=0; i<MAXIMUM; i++){
+        x[i] = 1+ rand()% 199;
+        printf("%d ",x[i]);
     }
-    printf("%d번을 비교하고 , %d번을 스왑했습니다.",COMPARE_COUNTER,SWAP_COUNTER);
+    printf("\n");
+
+    bubble3(x,MAXIMUM);
+
+    printf("After : \t");
+    for(int i=0; i<MAXIMUM ; i++){
+        printf("%d ",x[i]);
+    }
+    printf("\n%d번 비교했습니다. %d스왑했습니다",COMP_COUNTER,SWAP_COUNTER);
+    free(x);
     return 0;
 }
