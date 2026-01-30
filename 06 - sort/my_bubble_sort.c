@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define __MAX__ 33
-#define swap(x,y) do{ int t; t=x; x=y; y=t;}while(0);
+#define __MAX__ 10
+#define swap(x,y) do{ int t; t=x; x=y; y=t;}while(0)
 
 // 작은수를 앞에다 배열하는 버블정렬
 void bubble_sort(int a[], int size){

@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 #define __MAX__ 10
-#define swap(x,y) do{ int t; t=x; x=y; y=t;}while(0);
+#define swap(x,y) do{ int t; t=x; x=y; y=t;}while(0)
 
 int COMPARE;
 int SWAP;
@@ -15,31 +15,30 @@ void bubble_sort(int a[], int size){
             printf("%d ");
             if (a[j-1] > a[j]){
                 swap(a[j-1],a[j]);
-                printf("*");
-            }else{
-                printf("-");
             }
-            printf(" ");
         }
     }
 }
-void array_print(int a[], int max, int key, int flag){
+void arr_print(int a[], int max, int key, int flag){
     if(flag == 0){
         for(int i=0; i<max; i++){
-            printf("%3d ",a[i]);
+            printf("%3d",a[i]);
             if(i==key){
-                printf("-");
+                printf(" - ");
+            }else{
+                printf("   ");
             }
         }
     }else{
         for(int i=0; i<max; i++){
-            printf("%3d ",a[i]);
+            printf("%3d",a[i]);
             if(i==key){
-                printf("*");
+                printf(" * ");
+            }else{
+                printf("   ");
             }
         }
     }
-
 }
 void bubble_sort2(int a[], int n){
     int i,j;
@@ -50,9 +49,9 @@ void bubble_sort2(int a[], int n){
             if ( a[j] > a[j+1]){
                 SWAP++;
                 swap(a[j],a[j+1]);
-                array_print(a,n,j,1);
+                arr_print(a,n,j,1);
             }else{
-                array_print(a,n,j,0);
+                arr_print(a,n,j,0);
             }
             COMPARE++;
             printf("\n");
