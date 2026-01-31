@@ -12,7 +12,7 @@
 #include <time.h>
 #define FORWARD 1
 #define BACKWARD 2
-#define MAXIMUM 30
+#define MAXIMUM 100
 
 #define swap(type,x,y) do{ type t=x; x=y; y=t;}while(0)
 
@@ -58,12 +58,12 @@ void bid_bubble(int a[], int n){
             if(pass(a,first,last,FORWARD) == 0){    // 정방향( 큰수를 오른쪽으로 )
                 break;  // 스왑이 없었으면 정렬상태다. 종료
             }
-            last--; //큰수를 오른쪽에 밀어넣고 오른쪽 -1
+            last--; // 오른쪽 -1
         }else{
             if(pass(a,first,last,BACKWARD) == 0){   // 역방향( 작은수를 왼쪽으로)
                 break;
             }
-            first++;    // 작은수를 왼쪽으로 밀어넣고 왼쪽+1
+            first++;    // 왼쪽+1
         }
         nCount++;
     }
@@ -76,7 +76,7 @@ int main(void){
 
     printf("Original : \t");
     for(int i=0; i<MAXIMUM; i++){
-        x[i] = 1+ rand()% 199;
+        x[i] = 1+ rand()% 1999;
         printf("%d ",x[i]);
     }
     printf("\n");

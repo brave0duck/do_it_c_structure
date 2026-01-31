@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define MAXIMUM 10
+#define MAXIMUM 100
 #define swap(type,x,y) do{ type t=x; x=y; y=t;}while(0)
 
 typedef int INT;
