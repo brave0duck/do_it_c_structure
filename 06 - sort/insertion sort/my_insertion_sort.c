@@ -1,4 +1,4 @@
-//단순삽입정렬 개인구현. 1부터 N-1까지 순환하면서 알맞은 위치에 삽입한다
+//단순삽입정렬 개인구현. 1부터 N-1까지 순환하면서 알맞은 위치에 삽입한다. 한번에 쉬프트하는 함수로 구현해봄
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -6,8 +6,8 @@
 #define swap(type,x,y) do{type t=x; x=y; y=t;}while(0)
 
 typedef int INT;
-INT COMP_COUNTER;
-INT SFT_COUNTER;
+INT COMP_COUNTER;   //비교횟수 카운트용
+INT SFT_COUNTER;    // 쉬프트횟수 카운트용
 
 // 배열 쉬프트함수(배열, 삽입해야할 요소의 인덱스, 삽입될 자리의 인덱스)
 void arr_shift(int a[],int from, int to){
