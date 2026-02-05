@@ -44,17 +44,21 @@ void Clear(IntSet *s);  //클리어
 // 양쪽 집합 중 어느 한쪽에만 속하는 원소들의 집합입니다. 
 // 기호로는 (A∪B)-(A∩B)
 IntSet* symmetricDifference(IntSet *s1, const IntSet *s2,const IntSet *s3);
+
 // s1에 s2의 모든 원소를 추가해서 합집합을 만듬
 IntSet* ToUnion(IntSet *s1, const IntSet *s2);
+
 //s1에서 s2에 들어있지않은 모든 원소를 삭제
 IntSet* ToIntersection(IntSet *s1, const IntSet *s2);
+
 //s1에서 s2에 들어있는 모든 원소를 삭제
 IntSet* ToDifference(IntSet *s1,const IntSet *s2);
+
 // s1이 s2의 부분집합이면 1 아니면 0
 int IsSubset(const IntSet *s1, const IntSet *s2);
-// s1이 s2의 진부분집합이면 1 아니면 0
-// 진부분집합이란? a의 모든 요소가 b의 원소이면서 a,b집합이 같지않을경우
-int IsProperSubset(const IntSet *s1, const IntSet *s2);
 
+// s1이 s2의 진부분집합. 진부분집합이면 1 아니면 0
+int IsProperSubset(const IntSet *s1, const IntSet *s2);
+// 진부분집합이란? a의 모든 요소가 b의 원소이면서 a,b집합이 같지않을경우
 
 #endif

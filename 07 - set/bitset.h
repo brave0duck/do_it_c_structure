@@ -18,6 +18,11 @@ int Size(BitSet s);
 //print
 void Print(BitSet s);
 // print line
-void Print(BitSet s);
+void Println(BitSet s);
+
+BitSet*  Union(BitSet *bResult,const BitSet *b1, const BitSet *b2);
+BitSet*  Intersection(BitSet *bResult, const BitSet *b1, const BitSet *b2);
+BitSet*  Difference(BitSet * bResult, const BitSet *b1, const BitSet *b2);
+BitSet* Symmetric_Difference(BitSet * bResult, const BitSet * b1, const BitSet * b2);
 
 #endif
