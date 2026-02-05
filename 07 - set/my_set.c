@@ -1,6 +1,8 @@
 //집합의 모든 연산 구현
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <time.h>
 #include "my_set.h"
 
 #define NOT -1
@@ -24,15 +26,16 @@ int IsMember(const IntSet *s, int n){
 }
 //집합s에 원소n 추가
 int Add(IntSet *s, int n){
-    if( IsMember(s,n) != NOT || s->num >= s->max )
+    if( s->num >= s->max || IsMember(s,n) != NOT){
         return NOT;
+    }
     s->pSet[s->num++] = n;
     return 0;
 }
 //집합s에 원소n삭제 
 int Remove(IntSet *s, int n){
-    int pos = IsMember(s,n);
-    if( pos == NOT){
+   int pos = IsMember(s,n);
+    if( s->num <= 0 || pos == NOT){
         return NOT;
     }else{
         s->pSet[pos] = s->pSet[--s->num];
@@ -58,8 +61,8 @@ int Assign(IntSet *s1,const IntSet *s2){
 }
 //집합s1과 집합s2가 같은지 확인
 int Equal(const IntSet *s1,const IntSet *s2){
-    // 일단 크기가 다르면 다른것이다
-    if(s1->num != s2->num)
+    
+    if(s1->num != s2->num)// 크기가 다르면 다르다
         return 0;
     for(int i=0; i<s1->num; i++){
         if(IsMember(s2, s1->pSet[i]) == NOT)//s2집합에 s1의 모든 요소가 다 있고
@@ -133,8 +136,8 @@ void Clear(IntSet *s){
 // 대칭차집합(Symmetric Difference)은 두 집합 A, B에서 교집합(A∩B)을 제외한 합집합(A∪B)
 IntSet* symmetircDifference(IntSet *s1, const IntSet *s2, const IntSet *s3){
     IntSet uSet,iSet;
-    Initialize(&uSet,s1->num);
-    Initialize(&iSet,s2->num);
+    assert(!Initialize(&uSet,s1->num));
+    assert(!Initialize(&iSet,s2->num));
 
     Union(&uSet,s2,s3); // uSet은 합집합
     Intersection(&iSet,s2,s3);  // iSet은 교집합
@@ -195,10 +198,11 @@ int main(void){
 
     printf("==== 집합 예제 ====\n");
     printf("s1,s2,s3집합을 생성했습니다...\n");
-    
-    Initialize(&s1,(max*2));
-    Initialize(&s2,max); 
-    Initialize(&s3,max);
+    srand(time(NULL));
+
+    assert(!Initialize(&s1,(max*2)));
+    assert(!Initialize(&s2,max)); 
+    assert(!Initialize(&s3,max));
 
     for(int i=0; i<max; i++){
         s2.pSet[i] = 1 + rand() % 20;
