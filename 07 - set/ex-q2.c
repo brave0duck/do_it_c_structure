@@ -1,4 +1,11 @@
-//집합의 모든 연산 구현
+//집합의 모든 연산 구현. my_set.h파일 참조
+// 추가요구사항 : 
+// 1. 집합내의 원소가 항상 오름차순정렬을 유지하는 프로그램으로 변환
+// 2. 검색,추가,삭제도 이진검색을 사용
+// 3. 집합끼리 비교하는 연산에도 정렬을 활용할수있을까?
+// qsort(배열,크기,sizeof(int), int_comp);
+// bsearch(찾을값, 배열, 크기, sizeof(int), int_comp);
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "my_set.h"
