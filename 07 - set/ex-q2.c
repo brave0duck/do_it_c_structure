@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "my_set.h"
 
 #define NOT -1
@@ -199,6 +200,7 @@ int main(void){
     IntSet s1,s2,s3;
     IntSet *pSet;
     int max=10;
+    srand(time(NULL));
 
     printf("==== 집합 예제 ====\n");
     printf("s1,s2,s3집합을 생성했습니다...\n");

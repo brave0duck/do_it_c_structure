@@ -17,7 +17,7 @@ void Add(BitSet *s,int n){
 void Remove(BitSet *s, int n){
     *s &= ~SetOf(n);
 }
-// size
+// size bitset
 int Size(BitSet s){
     int n=0;
     while(s != BitSetNull){ // 1을 0으로 하나하나 카운팅을 한다

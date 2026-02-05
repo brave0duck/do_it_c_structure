@@ -19,10 +19,13 @@ int Size(BitSet s);
 void Print(BitSet s);
 // print line
 void Println(BitSet s);
-
-BitSet*  Union(BitSet *bResult,const BitSet *b1, const BitSet *b2);
+// 합집합
+BitSet* Union(BitSet *bResult,const BitSet *b1, const BitSet *b2);
+// 교집합
 BitSet*  Intersection(BitSet *bResult, const BitSet *b1, const BitSet *b2);
+// 차집합
 BitSet*  Difference(BitSet * bResult, const BitSet *b1, const BitSet *b2);
+// 대칭차집합
 BitSet* Symmetric_Difference(BitSet * bResult, const BitSet * b1, const BitSet * b2);
 
 #endif
