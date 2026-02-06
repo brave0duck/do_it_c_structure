@@ -44,7 +44,7 @@ int Remove(IntSet *s, int n){
 }
 //집합s에 넣을수있는 최대원소 개수를 반환
 int Capacity(const IntSet *s){
-    return s->max - s->num;
+    return (s->max - s->num);
 }
 //집합s의 원소개수
 int Size(const IntSet *s){
@@ -92,7 +92,8 @@ IntSet* Union(IntSet * s1,const IntSet *s2, const IntSet *s3){
 IntSet* Intersection(IntSet *s1,const IntSet *s2, const IntSet *s3){
     s1->num=0;
     for(int i=0; i<s2->num; i++){
-        if(IsMember(s3,s2->pSet[i]) != NOT){        //IsMember가 not이 아니면,즉. 멤버가 있다면
+        //IsMember가 not이 아니면,즉. 멤버가 있다면
+        if(IsMember(s3,s2->pSet[i]) != NOT){ 
             Add(s1,s2->pSet[i]);
         }
     }
@@ -204,6 +205,7 @@ int main(void){
     assert(!Initialize(&s2,max)); 
     assert(!Initialize(&s3,max));
 
+    //assign random number 
     for(int i=0; i<max; i++){
         s2.pSet[i] = 1 + rand() % 20;
         s3.pSet[i] = 1 + rand() % 20;
@@ -226,15 +228,15 @@ int main(void){
                 scanf("%d %d", &x, &data);
                 if(x==2){
                     if(IsMember(&s2,data) == NOT){
-                        printf("s2집합에 %d [없다] x\n",data);
+                        printf("s2집합에 %d [없다]\n",data);
                     }else{
-                        printf("s2집합에 %d [있다] o\n",data);
+                        printf("s2집합에 %d [있다]\n",data);
                     }
                 }else if(x==3){
                     if(IsMember(&s3,data) == NOT){
-                        printf("s3집합에 %d [없다] x\n",data);
+                        printf("s3집합에 %d [없다]\n",data);
                     }else{
-                        printf("s3집합에 %d [있다] o\n",data);
+                        printf("s3집합에 %d [있다]\n",data);
                     }
                 }
                 break;

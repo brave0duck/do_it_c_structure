@@ -8,7 +8,7 @@ typedef struct{
 }IntSet;
 
 int Initialize(IntSet *s, int max); //집합 초기화
-int IsMember(const IntSet *s, int n);   // 집합s에 n이 포함되어있는지 확인. 멤버맞음=index, 아님=0
+int IsMember(const IntSet *s, int n);   // 집합s에 n이 포함되어있는지 확인. 맞음=index, 아님=0
 int Add(IntSet *s, int n); //집합s에 원소n 추가. 추가불가 = -1, 추가했음 =0
 int Remove(IntSet *s, int n);  //집합s에 원소n삭제. 삭제불가 -1, 삭제했음 0
 int Capacity(const IntSet *s);  //집합s에 넣을수있는 최대원소 개수를 반환
