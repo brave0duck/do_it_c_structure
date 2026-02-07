@@ -1,3 +1,4 @@
+// <string.h> strcmp 간단구현
 #include <stdio.h>
 
 int str_cmp(const char * s1, const char * s2){
