@@ -3,16 +3,19 @@
 // conv_comp - 대소문자 구분없이 비교하는 함수
 #include <stdio.h>
 
+// 대문자를 소문자로 변환
 char conv(const char s){
     if('A' <= s && s <= 'Z'){
         return s+ ('a' - 'A');
     }
     return s;
 }
+// 대소문자 구별없이 문자간 비교
 int conv_comp(const char *s1,const char * s2){
     return conv(*s1) - conv(*s2);
     
 }
+// c표준함수 strcmp구현
 int str_cmp(const char * s1, const char * s2){
     while((conv(*s1) - conv(*s2))==0){
         if(*s1 == '\0'){
@@ -22,6 +25,7 @@ int str_cmp(const char * s1, const char * s2){
     }
     return conv(*s1) - conv(*s2);
 }
+// c표준함수 strncmp구현
 int str_ncmp(const char * s1,const char * s2, size_t n){
     int i;
     for(i=0; i <n; i++){
