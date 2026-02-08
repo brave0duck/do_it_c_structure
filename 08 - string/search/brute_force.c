@@ -1,5 +1,5 @@
 // 문자열내 패턴검색
-// 1. brute force (단순무식방법)
+// 1. brute force 
 // 배열처음부터 마지막까지 패턴문자열과 일치하는지 순서대로 비교
 #include <stdio.h>
 #include <string.h>

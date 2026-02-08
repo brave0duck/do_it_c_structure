@@ -1,5 +1,4 @@
-//부르트포스 법으로 가장 뒤쪽의 인덱스를 반환하는 bf_matchr함수를 작성 (스택을 이용)
-
+//부르트포스 법으로 가장 뒤쪽의 인덱스를 반환하는 bf_matchr함수를 작성
 #include <stdio.h>
 #include <string.h>
 #define MAX 256
