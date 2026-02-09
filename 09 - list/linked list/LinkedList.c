@@ -21,42 +21,93 @@ int compare(const Member *x, const Member *y){
 }
 Node* Search(List *list,const Member *x, int compare(const Member *x, const Member *y)){
     Node * p = list->head;
-    if(p != NULL){
-        do{
-            if(compare(&p->data,x) == 0){
-                list->crnt = p;
-                return p;
-            }
-            p = p->next;
-        }while(p->next != NULL);
+    while(p != NULL){
+        if(compare(&p->data,x) == 0){
+            list->crnt = p;
+            return p;
+        }
+        p = p->next;
     }
     return NULL;
 }
-
+// 맨앞 노드에 추가
 void InsertFront(List* list,const Member *x){
-    list->crnt = AllocNode();
-    SetNode(list->crnt,x,list->head);
-    list->head = list->crnt;
+    Node *p = list->head;
+    list->head = AllocNode();
+    SetNode(list->head,x,p);
 }
-
-void InsertRear(List* list, const Member *x);
-
-void RemoveFront(List * list);
-
-void RemoveRear(List *list);
-
-void RemoveCurrent(List * list);
-
-void Clear(List* list);
-
-void PrintCurrent(const List* list);
-
-void PrintlnCurrent(const List* list);
-
-void PrintAll(const List * list);
-
-void Terminate(List * list);
-
+// 맨뒤 노드에 추가
+void InsertRear(List* list, const Member *x){
+    if(list->head == NULL){
+        InsertFront(list,x);
+    }else{
+        Node * p = list->head;
+        while(p->next != NULL){
+            p = p->next;
+        }
+        p->next = list->crnt = AllocNode();
+        SetNode(list->crnt,x,NULL);
+    }
+}
+// 맨앞 노드 삭제
+void RemoveFront(List * list){
+    if(list->head != NULL){
+        Node * p = list->head;
+        list->head = p->next;
+        free(p);
+    }
+}
+// 맨뒤 노드 삭제
+void RemoveRear(List *list){
+    if(list->head !=NULL){
+        if(list->head->next == NULL){   //if node only 1
+            RemoveFront(list);
+        }else{
+            Node *p = list->head;
+            while(p->next->next != NULL){
+                p = p->next;
+            }
+            free(p->next);
+            p->next = NULL;
+        }
+    }
+}
+void RemoveCurrent(List * list){
+    Node * p = list->head;
+    if(p->next == NULL){    // if only node 1
+        RemoveFront(list);
+    }else{
+        while(p->next != list->crnt){
+            p = p->next;
+        }
+        p->next = list->crnt->next;
+        free(list->crnt);
+        list->crnt = p;
+    }
+}
+void Clear(List* list){
+    while(list->head != NULL){
+        RemoveFront(list);
+    }
+}
+void PrintCurrent(const List* list){
+    printf("Current Node data is %d",list->crnt->data);
+}
+void PrintlnCurrent(const List* list){
+    printf("Current Node data is %d\n",list->crnt->data);
+}
+void PrintAll(const List * list){
+    Node *p = list->head;
+    for(int i=1; p != NULL; i++){
+        printf("%dth Node data is %d\n", i, p->data);
+        p= p->next;
+    }
+}
+void Terminate(List * list){
+    Clear(list);
+    list->head=NULL;
+    list->crnt=NULL;
+}
 int main(void){
 
     return 0;
