@@ -1,6 +1,6 @@
 //원형 이중연결 리스트 구현
-#ifndef __CD_LINKEDLIST.H__
-#define __CD_LINKEDLIST.H__
+#ifndef __CD_LINKEDLIST__
+#define __CD_LINKEDLIST__
 
 typedef int DATA;
 
@@ -13,20 +13,20 @@ typedef struct __node{
 
 // 머리,꼬리, 검색을 위한 현재포인트
 typedef struct {
-    Node * head;
-    Node * tail;
-    Node * crnt;
+    Dnode * head;
+    Dnode * tail;
+    Dnode * crnt;
 
 }Dlist;
 
-Dnode* CreateNode(void);
-void SetNode(Dnode *node,const DATA *x,const Dnode* prev, const Dnode* next);
 // 초기화
 void Initialize(Dlist * list);
 
+// Empty?
 int IsEmpty(Dlist* list);
+// remain 1 node?
 int IsLast(Dlist * list);
-int IsOnlyOne(Dlist* list);
+
 //리스트에서 특정 원소를 가진 요소 찾기
 Dnode* Search(Dlist *list,const DATA *x);
 
