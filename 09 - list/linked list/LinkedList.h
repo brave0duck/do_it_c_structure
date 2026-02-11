@@ -1,5 +1,5 @@
-#ifndef ___LINKEDLIST.H
-#define ___LINKEDLIST.H
+#ifndef __LINKEDLIST__
+#define __LINKEDLIST__
 
 typedef struct __node{
     int data;
