@@ -1,4 +1,4 @@
-// 링크드리스트 구현 연습
+// 싱글 1링크드리스트 구현 연습
 #include <stdio.h>
 #include <stdlib.h>
 #include "LinkedList.h"
