@@ -24,7 +24,7 @@ void Initialize(Dlist * list);
 
 // Empty?
 int IsEmpty(Dlist* list);
-// remain 1 node?
+// if remain 1 node?
 int IsLast(Dlist * list);
 
 //리스트에서 특정 원소를 가진 요소 찾기

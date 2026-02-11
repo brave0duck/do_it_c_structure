@@ -1,4 +1,8 @@
 // 원형 이중연결 리스트 구현
+// 개선사항  
+// - tail이 과연필요한가?
+// - 노드 양쪽 포인터 이동에 관한 함수로 따로 처리하는것이 더 효율적
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "CD_LinkedList.h"
@@ -21,7 +25,7 @@ int IsEmpty(Dlist *list){
     return list->head == NULL;
 }
 int IsLast(Dlist * list){
-    return list->head == list->head->next;
+    return list->head == list->tail;
 }
 //리스트에서 특정 원소를 가진 요소 찾기
 Dnode* Search(Dlist *list,const DATA *x){
@@ -84,8 +88,8 @@ int CurrentPrev(Dlist *list){
     return 1;
 }
 // 삽입,삭제 작업에서 해야될일
-// 1. 양쪽포인터 재조정
-// 2. 리스트 head,tail포인터 재조정
+// 1. 삭제되는 노드 앞뒤 포인터 재조정
+// 2. 리스트자체 head,tail포인터 재조정
 //**************** insert *******************//
 
 //머리에 노드를 삽입
@@ -98,8 +102,9 @@ void InsertFront(Dlist * list,const DATA *x){
         SetNode(p,x,list->tail,list->head);
     }else{
         Dnode * p = CreateNode();
+        //원형리스트이기때문에 첫노드의 이전노드는 마지막노드 , 다음노드는 기존헤드노드
         SetNode(p,x,list->tail,list->head);
-        list->head->prev = p;
+        list->head->prev = p;   
         list->head = p;
 
         list->tail->next = p;
@@ -119,6 +124,7 @@ void InsertRear(Dlist * list, const DATA *x){
         SetNode(p,x,list->tail,list->head);
         list->tail->next = p;
         list->tail = p;
+        list->head->prev = p;
     }
 }
 // p가 가리키는 노드 바로 뒤에 노드를 삽입
@@ -188,28 +194,26 @@ void RemoveCurrent(Dlist *list){
 // p가 가리키는 노드 삭제
 void Remove(Dlist *list,Dnode *p){
     if(!IsEmpty(list)){
-        if(p!= NULL){
+        if(!IsLast(list)){
             p->prev->next = p->next;
             p->next->prev = p->prev;
             
             if(p == list->head){
                 list->head = p->next;
-                p->next->prev = list->tail;
-                list->tail->next = p->next;
             }
             if(p == list->tail){
-                list->tail = p->prev;
-                list->head->prev = p->prev;
-                list->tail->next = list->head;
+                list->tail = p->prev;                
             }
             free(p);
+        }else{
+            free(list->head);
         }
     }
 }
 // 모든 노드를 삭제
 void Clear(Dlist* list){
     while(!IsEmpty(list)){
-        Remove(list,list->head);
+        RemoveFront(list);
     }
 }
 // 원형 이중연결 리스트 종료
@@ -221,7 +225,7 @@ void Terminate(Dlist *list){
 }
 int main(void){
     
-    printf("==== 원형 더블 링크드 리스트 예제 ====\n");
+    printf("<원형 더블 링크드 리스트 예제>\n");
     
 
     // initialize
@@ -232,10 +236,10 @@ int main(void){
         int menu, x, data;
         Dnode *s;
         
-        printf("\n========== Circle Double Linked-List =============\n");
-        printf("(1)앞 추가 (2)뒤 추가 (3)검색뒤 추가 (4)검색  (5)출력 \n");
-        printf("(6)앞 삭제 (7)뒤 삭제 (8)검색후 삭제 (9)초기화 (0)종료 \n");
-        printf("====================================================\n");
+        printf("\n============ 원형 더블 링크드-리스트 ===================\n");
+        printf("(1)앞 추가 (2)뒤 추가 (3)검색후에추가 (4)검색  (5)출력 \n");
+        printf("(6)앞 삭제 (7)뒤 삭제 (8)검색 삭제   (9)초기화 (0)종료 \n");
+        printf("=======================================================\n");
         scanf("%d", &menu);
 
         switch(menu){
@@ -287,9 +291,10 @@ int main(void){
                 break;
             case 9://Clear
                 Clear(&dlist);
+                printf("모든 노드가 초기화되었습니다.\n");
                 break;
             case 0:// Exit
-                printf("Program Exit");
+                printf("프로그램을 종료합니다...\n");
                 goto EXIT;
         }
         
