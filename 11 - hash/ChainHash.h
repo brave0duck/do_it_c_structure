@@ -10,7 +10,7 @@ typedef struct __node{
 
 typedef struct __hash{
     int size;
-    Node ** table;
+    Node * table[];
 }ChainHash;
 
 // 해시함수
