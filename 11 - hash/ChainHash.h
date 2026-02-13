@@ -10,22 +10,22 @@ typedef struct __node{
 
 typedef struct __hash{
     int size;
-    Node * table[];
+    Node ** table;
 }ChainHash;
 
 // 해시함수
 int hash(int key,int size);
 // 노드추가
-void SetNode(Node * n,const Member *x,const Node *next);
+void SetNode(Node * n,Member *x,Node *next);
 
 // 해시테이블 초기화
 int Init(ChainHash * h,int size);
 // x검색
-Node * Search(ChainHash *h,const Member *x);
+Node * Search(ChainHash *h,Member *x);
 // x추가
-int Add(ChainHash *h, const Member *x);
+int Add(ChainHash *h,Member *x);
 // x삭제
-int Remove(ChainHash *h,const Member *x);
+int Remove(ChainHash *h,Member *x);
 // print all
 void Dump(const ChainHash *h);
 // 종료
