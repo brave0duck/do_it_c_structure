@@ -13,11 +13,6 @@ typedef struct __hash{
     Node ** table;
 }ChainHash;
 
-// 해시함수
-int hash(int key,int size);
-// 노드추가
-void SetNode(Node * n,Member *x,Node *next);
-
 // 해시테이블 초기화
 int Init(ChainHash * h,int size);
 // x검색
@@ -30,4 +25,5 @@ int Remove(ChainHash *h,Member *x);
 void Dump(const ChainHash *h);
 // 종료
 void Terminate(ChainHash *h);
+
 #endif
