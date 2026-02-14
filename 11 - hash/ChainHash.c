@@ -1,10 +1,12 @@
+//**************************************************************
 // chain-hash 임시구현. 해시테이블내에 링크드리스트로 연결된다
-//  [size|table]
-//  |
-//  []-[]-[]-[]-[]-[]-[]  <-- hash table
-//  |  |  |  |  |  x  x
-//  [] [] [] [] []         <-- node
-
+//  [**table]
+//   |
+//  table[0]-table[1]-table[2]-table[3]-table[4] <-- hash table
+//  |       |         |        |         | 
+//  []      []        []       []        x        <-- node
+//  []      []        x        x
+//*************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -23,6 +25,9 @@ typedef enum {
 
 static int hash(int key,int size){
     return key%size;
+}
+Node * CreateNode(void){
+    return calloc(1,sizeof(Node));
 }
 static void SetNode(Node * n,Member *x,Node *next){
     n->data = *x;
@@ -61,9 +66,6 @@ static MENU menu_view(void){
 
         printf("범위를 벗어났습니다. 1~5 사이를 입력하세요.\n");
     }
-}
-Node * CreateNode(void){
-    return calloc(1,sizeof(Node));
 }
 // 해시테이블 초기화
 int Init(ChainHash * h,int size){
@@ -124,7 +126,7 @@ Node * Search(ChainHash *h,Member *x){
         Node * find = prev->next;
         
         while(find != NULL){
-            if(find->data == *x){
+            if(find->data == *x){       //찾으면 노드 리턴
                 return prev;
             }
             prev = find;
