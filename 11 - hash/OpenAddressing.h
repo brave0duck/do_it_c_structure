@@ -10,8 +10,9 @@ typedef enum{
     DELETED     //삭제됐다
 } Status;
 
+
 typedef struct{
-    Memeber data;
+    Member data;
     Status stat;
 }Bucket;
 
@@ -21,10 +22,12 @@ typedef struct{
 }ClosedHash;
 
 int Initialize(ClosedHash * h, const int size);
-Bucket * Search(CloseHash *h, const Member *x);
-int Add(CloseHash *h,const Member *x);
-int Remove(CloseHash *h,const Member *x);
-void Dump(CloseHash *h);
-void Terminate(CloseHash *h);
+Bucket * Search(ClosedHash *h, const Member *x);
+int Add(ClosedHash *h,const Member *x);
+int Remove(ClosedHash *h,const Member *x);
+void Dump(ClosedHash *h);
+void Clear(ClosedHash *h);
+void Println(Bucket * b);
+void Terminate(ClosedHash *h);
 
 #endif

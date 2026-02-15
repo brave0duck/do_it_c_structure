@@ -1,19 +1,19 @@
-// 오픈어드레싱 해쉬. 자료를 골고루 나누어 저장하는 로직으로 재해싱을 통해 자료를 저장. 
-// 자료의 위치가 유동적으로 변화하며 오직 함수를 통해서만 검색,삭제가 가능
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include "OpenAddressing.h"
-#include "bitset.h"
+
 #define NOT_OK -1
 #define OK 0
 
-typedef unsigned long BitSet;
-#define BitSetNull  (BitSet)0
-#define BitSetBits  64
-#define SetOf(no)   ((BitSet)1<<(no))
 
+typedef enum{
+    TERMINATE,
+    ADD,
+    DELETE,
+    SEARCH,
+    CLEAR,
+    DUMP
+} Menu;
 
 static int hash(int key,int size){
     return key%size;
@@ -49,21 +49,19 @@ int Add(ClosedHash *h,const Member *x){
     int counting=0;
     Member mdata = *x;
     int key = hash(*x,h->size);
-    Bucket * p = h->table[key];
-
-    if( p->stat == EMPTY || p->stat == DELETED){
-        p->data = mdata;
-        p->stat = OCCUPIED;
+    
+    if( h->table[key].stat == EMPTY || h->table[key].stat == DELETED){
+        h->table[key].data = mdata;
+        h->table[key].stat = OCCUPIED;
     }else{
-        while(p->stat == OCCUPIED){
-            int another_key = rehash(mdata++,size);
-            p = h->table[another_key];
+        while(h->table[key].stat == OCCUPIED){
+            key = rehash(mdata++,h->size);
             if(counting++ > h->size){
                 return NOT_OK;
             }
         }
-        p->data = *x;
-        p->stat = OCCUPIED;
+        h->table[key].data = *x;
+        h->table[key].stat = OCCUPIED;
     }
     return OK;
 }
@@ -85,13 +83,17 @@ Bucket * Search(ClosedHash *h, const Member *x){
     Member mdata = *x;
     int index = hash(mdata,h->size);
     
-    while(counting <= h->size){
-        if(h->table[index].data == *x){
-            return p;
-        }else{
-            index = rehash(mdata++,h->size);
+    if(h->table[index].stat == EMPTY){
+        return NULL;
+    }else{
+        while(counting <= h->size){
+            if(h->table[index].data == *x){
+                return &(h->table[index]);
+            }else{
+                index = rehash(mdata++,h->size);
+            }
+            counting++;
         }
-        counting++;
     }
     return NULL;
 }
@@ -99,29 +101,103 @@ Bucket * Search(ClosedHash *h, const Member *x){
 // logic : 1.unsigned long a[size]
 // 2. 처음 버킷부터 끝까지 돌면서 OCCUPIED상태의 버킷 값을 해시로 돌려서 인덱스값을 구한후 해당 배열 첨자의 bitset에 seton
 // 3. 비트셋 처음부터 끝까지 돌면서 해당 인덱스를 얻어 그 값을 프린트
-
-
-
-
-
-//-------------------------- 여기까지 ---------------------------------
 void Dump(ClosedHash *h){
-    BitSet * p = calloc(h->size,sizeof(BitSet));
+    
     for(int i=0; i<h->size ; i++){
-        if(h->table[i].stat == OCCUPIED){
-            int index = hash(h->table[i].data,h->size);
-            p[i] = p[i] | SetOf(index)
+        printf("[%d] -- ",i);
+        switch(h->table[i].stat){
+            case OCCUPIED:
+                printf("%d ", h->table[i].data);
+                break;
+            case DELETED:
+                printf("[삭제]");
+                break;
+            case EMPTY:
+                printf("[비어있습]");
+                break;
         }
+        putchar('\n');
     }
-    *s |= SetOf(n);
-
+}
+void Clear(ClosedHash *h){
+    for(int i=0; i<h->size; i++){
+        h->table[i].stat = EMPTY;
+    }
+}
+void Println(Bucket * b){
+    printf("%d\n",b->data);
 }
 // 테이블 메모리해제후 나머지 값 초기화
 void Terminate(ClosedHash *h){
-
+    Clear(h);
+    if(h->table != NULL){
+        free(h->table);
+    }
+    h->size=0;
 }
+Menu SelectMenu(void){
+    int ch;
+    do{
+        printf("================ Open Addressing Hash =====================\n");
+        printf("(1)Add (2)Remove (3)Search (4)All Delete (5)Dump (0)Exit\n");
+        printf("===========================================================\n\n");
+        printf("select : ");
+        scanf("%d",&ch);
+    }while( ch < TERMINATE || ch > DUMP);
 
+    return (Menu)ch;
+}
 int main(void){
+    Menu menu;
+    ClosedHash hash;
+    if(Initialize(&hash,13) == NOT_OK)
+        return -1;
 
+    do{
+        int result;
+        Member x;
+        Bucket *temp;
+        switch(menu = SelectMenu()){
+            case ADD:
+                printf("추가할 데이터는 : ");
+                scanf("%d",&x);
+                if(Add(&hash,&x)== NOT_OK){
+                    printf("오류 : 추가에 실패했습니다\n");
+                }else{
+                    printf("추가되었습니다.\n");
+                }
+                break;
+            case DELETE:
+                printf("삭제할 데이터는 : ");
+                scanf("%d",&x);
+                if(Remove(&hash,&x)==NOT_OK){
+                    printf("오류 : 삭제에 실패했습니다\n");
+                }else{
+                    printf("삭제했습니다\n");
+                }
+                break;
+            case SEARCH:
+                printf("검색할 데이터는 : ");
+                scanf("%d",&x);
+                Bucket * p = Search(&hash,&x);
+                if(p==NULL){
+                    printf("오류 : 검색에 실패했습니다\n");
+                }else{
+                    printf("검색되었습니다. ");
+                    Println(p);
+                }
+                break;
+            case CLEAR:
+                Clear(&hash);
+                printf("해시테이블이 초기화되었습니다\n");
+                break;
+            case DUMP:
+                Dump(&hash);
+                break;
+
+        }
+    }while(menu != TERMINATE);
+    Terminate(&hash);
+    printf("프로그램을 종료합니다\n");
     return 0;
 }
